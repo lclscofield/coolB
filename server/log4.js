@@ -6,12 +6,12 @@ log4.configure({
         access: {
             type: 'dateFile',
             pattern: '-yyyy-MM-dd.log', // 生成文件的规则
-            filename: path.join('./logs/', 'access.log') // 生成文件名
+            filename: path.join(__dirname, './logs/access.log') // 生成文件名
         },
         application: {
             type: 'dateFile',
             pattern: '-yyyy-MM-dd.log',
-            filename: path.join('./logs/', 'application.log')
+            filename: path.join(__dirname, './logs/application.log')
         },
         out: {
             type: 'console'
@@ -20,7 +20,7 @@ log4.configure({
     categories: {
         default: { appenders: ['out'], level: 'info' },
         access: { appenders: ['access'], level: 'info' },
-        application: { appenders: ['application'], level: 'WARN' }
+        application: { appenders: ['application'], level: 'info' }
     }
 })
 

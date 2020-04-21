@@ -6,6 +6,6 @@ const router = new Router()
 
 const routers = router
     .post('/register', usersController.register) // 注册
-    .get('/login', usersController.login) // 登录
+    .post('/login', usersController.login) // 登录
 
 module.exports = routers.routes()

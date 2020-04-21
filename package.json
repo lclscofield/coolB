@@ -12,11 +12,15 @@
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
     },
     "dependencies": {
+        "@hapi/joi": "^17.1.1",
         "@nuxtjs/axios": "^5.3.6",
         "@nuxtjs/dotenv": "^1.4.0",
         "ant-design-vue": "^1.1.10",
         "cross-env": "^5.2.0",
+        "identicon.js": "^2.3.3",
         "koa": "^2.6.2",
+        "koa-bodyparser": "^4.3.0",
+        "koa-log4": "^2.3.2",
         "koa-router": "^8.0.8",
         "mongoose": "^5.9.9",
         "nuxt": "^2.0.0"

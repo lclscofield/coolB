@@ -2,6 +2,7 @@ const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const mongoose = require('mongoose')
+const bodyParser = require('koa-bodyparser')
 
 const config = require('../nuxt.config.js')
 const routers = require('./routers/index')
@@ -49,6 +50,9 @@ async function start() {
 
     // 记录所有访问
     app.use(accessLogger())
+
+    // 使用ctx.request.body解析中间件
+    app.use(bodyParser())
 
     // 初始化路由中间件
     app.use(routers.routes()).use(routers.allowedMethods())
