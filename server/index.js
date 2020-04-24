@@ -3,14 +3,22 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const mongoose = require('mongoose')
 const bodyParser = require('koa-bodyparser')
+const session = require('koa-session')
 
 const config = require('../nuxt.config.js')
 const routers = require('./routers/index')
+const sessionConfig = require('./session.config')
 
 // 日志记录
 const { logger, accessLogger } = require('./log4')
 
 const app = new Koa()
+
+// session 密钥
+app.keys = ['funny mud pie']
+
+// 加载 session 中间件
+app.use(session(sessionConfig, app))
 
 // Import and Set Nuxt.js options
 config.dev = app.env !== 'production'

@@ -25,6 +25,9 @@ module.exports = {
         if (await validateError(ctx, schemaRegister, postData)) return
 
         const data = await usersServices.create(postData)
+        if (data.success) {
+            ctx.session.logged = true
+        }
         ctx.body = data
     },
 

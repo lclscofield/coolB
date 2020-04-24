@@ -3,7 +3,7 @@ const { logger } = require('../log4')
 
 module.exports = {
     /**
-     * 生成随机盐
+     * 生成随机 5 位盐值
      */
     createSalt() {
         return Math.random()
@@ -21,9 +21,14 @@ module.exports = {
         return hash.digest('hex')
     },
 
+    /**
+     * 验证参数
+     * @param {object} ctx
+     * @param {object} schema 规则
+     * @param {object} data 数据
+     */
     async validateError(ctx, schema, data) {
         try {
-            // 验证参数
             await schema.validateAsync(data)
         } catch (err) {
             logger.error(err)
@@ -33,5 +38,16 @@ module.exports = {
             }
             return true
         }
+    },
+
+    /**
+     * 生成随机验证码，默认 4 位，最多 8 位
+     * @param {number} num
+     */
+    createCode(num = 4) {
+        if (num > 8) num = 8
+        return Math.random()
+            .toString()
+            .slice(2, 2 + num)
     }
 }
