@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Header from '@/components/Header'
+import Header from '~/components/Header'
 
 export default {
     name: 'Home',
@@ -20,13 +20,13 @@ export default {
     },
 
     // 异步获取数据
-    asyncData({ $axios }) {
-        // console.log(111)
+    async asyncData({ $api }) {
+        // await $api.register()
     },
 
     mounted() {
         console.log(process)
-        // this.$api.register()
+        this.$api.login()
     }
 }
 </script>

@@ -18,7 +18,9 @@
 
 <script>
 export default {
-    name: 'Header'
+    name: 'Header',
+
+    methods: {}
 }
 </script>
 <style lang="less" scoped>

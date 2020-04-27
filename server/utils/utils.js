@@ -1,12 +1,12 @@
 const crypto = require('crypto')
 const { logger } = require('../log4')
 
-module.exports = {
+const utils = {
     /**
      * 生成随机 8 位盐值
      */
     createSalt() {
-        return this.createCode(8)
+        return utils.createCode(8)
     },
 
     /**
@@ -49,3 +49,5 @@ module.exports = {
             .slice(2, 2 + num)
     }
 }
+
+module.exports = utils

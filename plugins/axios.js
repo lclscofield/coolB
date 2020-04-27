@@ -1,10 +1,12 @@
 import http from '../api'
 
-export default function({ $axios, redirect }, inject) {
+export default function(ctx, inject) {
+    const { $axios, redirect } = ctx
     // 自定义封装 api
     const axios = $axios.create()
     const api = http(axios)
     inject('api', api)
+    ctx.$api = api
 
     // request interceptor 请求拦截
     axios.interceptors.request.use(
@@ -29,14 +31,13 @@ export default function({ $axios, redirect }, inject) {
          * You can also judge the status by HTTP Status Code
          */
         response => {
-            console.log('response:', response)
             const res = response.data
-            if (res.code === 200) {
+            console.log(111, res)
+            if (res.success && process.browser) {
                 return res
             }
             // redirect('/404')
-            // if the custom code is not 200, it is judged as an error.
-            return Promise.reject(new Error(res.msg || 'Error'))
+            // return Promise.reject(new Error(res.errMsg || 'Error'))
         },
         error => {
             console.log(error) // for debug

@@ -57,7 +57,7 @@ module.exports = {
 
         const data = await usersServices.login(postData)
         if (data.success) {
-            ctx.session.logged = true
+            ctx.session.logged = true // 登录成功写入 session
         }
         ctx.body = data
     },

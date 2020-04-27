@@ -50,6 +50,10 @@ module.exports = {
         }
     },
 
+    /**
+     * 登录
+     * @param {object} userInfo
+     */
     async login(userInfo) {
         const { account, password } = userInfo
 
@@ -59,10 +63,15 @@ module.exports = {
             // 密码用盐值加密对比
             const hashPassword = createHash(password + ':' + doc.salt)
             if (hashPassword === doc.password) {
+                console.log(123)
                 return {
                     success: true
                 }
             }
+        }
+        return {
+            success: false,
+            errMsg: '账号密码错误'
         }
     },
 
