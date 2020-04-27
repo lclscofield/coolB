@@ -50,6 +50,22 @@ module.exports = {
         }
     },
 
+    async login(userInfo) {
+        const { account, password } = userInfo
+
+        // 通过账号获取数据，然后验证密码
+        const doc = await userModel.login(account)
+        if (doc) {
+            // 密码用盐值加密对比
+            const hashPassword = createHash(password + ':' + doc.salt)
+            if (hashPassword === doc.password) {
+                return {
+                    success: true
+                }
+            }
+        }
+    },
+
     /**
      * 发送邮箱验证码
      * @param {string} email

@@ -1,6 +1,8 @@
 // 引用mongoose模块
 const mongoose = require('mongoose')
 
+const { logger } = require('../log4')
+
 // mongoose.Schema 方法用来定义数据集的格式
 const Schema = mongoose.Schema
 
@@ -30,9 +32,9 @@ module.exports = {
      * @param {object} userInfo
      */
     async create(userInfo) {
-        const res = await UserModel.create(userInfo)
-        console.log('create user:', res._id, res.username)
-        return res
+        const doc = await UserModel.create(userInfo)
+        logger.info('create user:', doc._id, doc.username)
+        return doc
     },
 
     /**
@@ -40,9 +42,20 @@ module.exports = {
      * @param {string} username
      */
     async findUserForUsername(username) {
-        const res = await UserModel.findOne({
+        const doc = await UserModel.findOne({
             username
         })
-        return res
+        return doc
+    },
+
+    /**
+     * 登录，验证账号和密码
+     * @param {string} account
+     */
+    async login(account) {
+        const doc = await UserModel.findOne({
+            $or: [{ username: account }, { email: account }, { phone: account }]
+        })
+        return doc
     }
 }

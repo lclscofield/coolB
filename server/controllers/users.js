@@ -8,17 +8,28 @@ const schemaRegister = Joi.object({
     username: Joi.string()
         .alphanum()
         .min(1)
-        .max(12)
+        .max(20)
         .required(),
-    password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,30}$')),
-    emailMessageId: Joi.string(),
-    code: Joi.number()
+    password: Joi.string()
+        .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
+        .required(),
+    emailMessageId: Joi.string().required(),
+    code: Joi.number().required()
 })
 // 发送邮箱参数验证
 const schemaSendEmail = Joi.object({
-    email: Joi.string().email({
-        minDomainSegments: 2
-    })
+    email: Joi.string()
+        .email({
+            minDomainSegments: 2
+        })
+        .required()
+})
+// 登录参数验证
+const schemaLogin = Joi.object({
+    account: Joi.string().required(),
+    password: Joi.string()
+        .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
+        .required()
 })
 
 // 用户行为处理
@@ -33,9 +44,6 @@ module.exports = {
         if (await validateError(ctx, schemaRegister, postData)) return
 
         const data = await usersServices.create(postData)
-        // if (data.success) {
-        //     ctx.session.logged = true
-        // }
         ctx.body = data
     },
 
@@ -43,7 +51,15 @@ module.exports = {
      * 用户登录
      */
     async login(ctx) {
-        await console.log(456)
+        const postData = ctx.request.body
+
+        if (await validateError(ctx, schemaLogin, postData)) return
+
+        const data = await usersServices.login(postData)
+        if (data.success) {
+            ctx.session.logged = true
+        }
+        ctx.body = data
     },
 
     /**

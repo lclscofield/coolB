@@ -17,7 +17,6 @@ const app = new Koa()
 // session 密钥
 app.keys = ['funny mud pie']
 
-
 // 加载 session 中间件
 app.use(session(sessionConfig, app))
 
