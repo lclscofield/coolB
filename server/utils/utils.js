@@ -3,12 +3,10 @@ const { logger } = require('../log4')
 
 module.exports = {
     /**
-     * 生成随机 5 位盐值
+     * 生成随机 8 位盐值
      */
     createSalt() {
-        return Math.random()
-            .toString()
-            .slice(2, 7)
+        return this.createCode(8)
     },
 
     /**
@@ -41,10 +39,10 @@ module.exports = {
     },
 
     /**
-     * 生成随机验证码，默认 4 位，最多 8 位
+     * 生成随机验证码，默认 6 位，最多 8 位
      * @param {number} num
      */
-    createCode(num = 4) {
+    createCode(num = 6) {
         if (num > 8) num = 8
         return Math.random()
             .toString()

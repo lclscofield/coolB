@@ -24,6 +24,7 @@
         "koa-router": "^8.0.8",
         "koa-session": "^5.13.1",
         "mongoose": "^5.9.9",
+        "nodemailer": "^6.4.6",
         "nuxt": "^2.0.0"
     },
     "devDependencies": {

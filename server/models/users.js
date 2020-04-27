@@ -5,13 +5,22 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // 用户信息数据格式
-const UserSchema = new Schema({
-    username: String, // 定义一个属性 username，类型为 String
-    password: String, // 哈希密码
-    salt: String, // 加密盐值
-    phone: String, // 手机
-    imgUrl: String // 头像
-})
+const UserSchema = new Schema(
+    {
+        username: String, // 定义一个属性 username，类型为 String
+        password: String, // 哈希密码
+        salt: String, // 加密盐值
+        imgUrl: String, // 头像
+        phone: String, // 手机
+        email: String // 邮箱
+    },
+    {
+        timestamps: {
+            createdAt: 'createTime',
+            updatedAt: 'updateTime'
+        }
+    }
+)
 
 const UserModel = mongoose.model('Users', UserSchema)
 
