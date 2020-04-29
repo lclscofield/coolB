@@ -17,12 +17,19 @@ const UserSchema = new Schema(
         email: String // 邮箱
     },
     {
-        timestamps: {
-            createdAt: 'createTime',
-            updatedAt: 'updateTime'
-        }
+        timestamps: true
     }
 )
+
+// _id 转为 id
+UserSchema.options.toJSON = {
+    virtuals: true,
+    transform(doc, ret) {
+        ret.id = doc.id
+        delete ret._id
+        return ret
+    }
+}
 
 const UserModel = mongoose.model('Users', UserSchema)
 
@@ -65,11 +72,10 @@ module.exports = {
      */
     async getUserInfo(id) {
         const doc = await UserModel.findById(id, {
-            password: 0,
-            salt: 0
+            username: 1,
+            email: 1,
+            imgUrl: 1
         })
-        doc.id = doc._id
-        delete doc._id
         return doc
     }
 }

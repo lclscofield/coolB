@@ -35,7 +35,6 @@ export default {
     },
 
     mounted() {
-        console.log(this.pageData)
         const { userInfo } = this.pageData || {}
         if (userInfo) {
             this.A_setUserInfo(userInfo)

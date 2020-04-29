@@ -20,6 +20,7 @@ module.exports = {
         'nuxt/no-cjs-in-config': 'off',
         indent: ['error', 4],
         'vue/html-indent': ['error', 4],
-        'no-console': 'off'
+        'no-console': 'off',
+        'vue/attribute-hyphenation': ['error', 'never']
     }
 }

@@ -7,20 +7,61 @@
             <div class="header-nav">
                 <nuxt-link class="header-nav-item" to="/">首页</nuxt-link>
             </div>
-            <div class="header-user">
-                <span>登录</span>
+            <div v-if="!userInfo" class="header-user">
+                <span class="header-user-item" @click="showLoginModal(0)">
+                    登录
+                </span>
                 <a-divider type="vertical" />
-                <span>注册</span>
+                <span class="header-user-item" @click="showLoginModal(1)">
+                    注册
+                </span>
+            </div>
+            <div v-else class="header-user flex">
+                <span class="username">{{ userInfo.username }}</span>
+                <img class="avatar" :src="userInfo.imgUrl" />
             </div>
         </div>
+        <Login
+            :modalType="modalType"
+            :showModal="showModal"
+            @hideModal="showModal = false"
+        ></Login>
     </header>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
+import Login from './Login'
+
 export default {
     name: 'Header',
 
-    methods: {}
+    components: {
+        Login
+    },
+
+    data() {
+        return {
+            modalType: '',
+            showModal: false
+        }
+    },
+
+    computed: {
+        ...mapGetters({
+            userInfo: 'getUserInfo'
+        })
+    },
+
+    methods: {
+        // 打开弹窗
+        showLoginModal(typeIdx) {
+            const types = ['login', 'register']
+            this.modalType = types[typeIdx]
+            this.showModal = true
+        }
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -62,10 +103,30 @@ export default {
         > .header-user {
             padding: 0 20px;
             width: 300px;
+            text-align: right;
 
-            > span {
+            > .header-user-item {
                 color: @primary-color;
                 cursor: pointer;
+            }
+
+            &.flex {
+                display: flex;
+            }
+
+            > .username {
+                display: inline-block;
+                width: 180px;
+                white-space: nowrap; /* 使文本不可换行 */
+                overflow: hidden; /* 隐藏溢出部分 */
+                text-overflow: ellipsis; /* 显示省略符号来代表被隐藏的文本 */
+            }
+
+            > .avatar {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                margin-left: 10px;
             }
         }
     }
