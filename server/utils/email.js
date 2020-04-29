@@ -1,6 +1,7 @@
 // 引入 nodemailer
 const nodemailer = require('nodemailer')
 
+const { appName } = require('../../nuxt.config.js')
 const { createCode } = require('./utils')
 
 // 发送的邮箱信息
@@ -27,7 +28,7 @@ module.exports = {
     async sendEmailCode(toEmail) {
         const code = createCode()
         const res = await email.sendMail({
-            from: `coolBa <${fromEmailInfo.user}>`, // 发件人
+            from: `${appName} <${fromEmailInfo.user}>`, // 发件人
             to: toEmail, // 收件人
             subject: '邮箱验证码', // 主题
             // 发送text或者html格式

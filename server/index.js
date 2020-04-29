@@ -8,6 +8,7 @@ const session = require('koa-session')
 const config = require('../nuxt.config.js')
 const routers = require('./routers/index')
 const sessionConfig = require('./session.config')
+const inject = require('./utils/inject')
 
 // 日志记录
 const { logger, accessLogger } = require('./log4')
@@ -66,10 +67,14 @@ async function start() {
     app.use(routers.routes()).use(routers.allowedMethods())
 
     // nuxt 渲染
-    app.use(ctx => {
+    app.use(async ctx => {
         ctx.status = 200
         ctx.respond = false // Bypass Koa's built-in response handling
         ctx.req.ctx = ctx // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash
+
+        // 向页面注入数据
+        await inject(ctx)
+
         nuxt.render(ctx.req, ctx.res)
     })
 

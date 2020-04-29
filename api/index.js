@@ -7,11 +7,8 @@ export default function http(axios) {
         //     console.log(999)
         //     await axios.post('users/register')
         // }
-        async login() {
-            const res = await axios.post('users/login', {
-                account: 'lcl',
-                password: '123456'
-            })
+        async login(userInfo) {
+            const res = await axios.post('users/login', userInfo)
             console.log(res)
         }
     }

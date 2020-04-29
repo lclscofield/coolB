@@ -57,5 +57,19 @@ module.exports = {
             $or: [{ username: account }, { email: account }, { phone: account }]
         })
         return doc
+    },
+
+    /**
+     * 通过 id 获取用户信息
+     * @param {string} id
+     */
+    async getUserInfo(id) {
+        const doc = await UserModel.findById(id, {
+            password: 0,
+            salt: 0
+        })
+        doc.id = doc._id
+        delete doc._id
+        return doc
     }
 }

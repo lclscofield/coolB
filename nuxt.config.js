@@ -1,4 +1,5 @@
 module.exports = {
+    appName: 'CoolBa',
     mode: 'universal',
     /*
      ** Headers of the page

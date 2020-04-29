@@ -13,6 +13,11 @@ const schemaRegister = Joi.object({
     password: Joi.string()
         .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
         .required(),
+    email: Joi.string()
+        .email({
+            minDomainSegments: 2
+        })
+        .required(),
     emailMessageId: Joi.string().required(),
     code: Joi.number().required()
 })
@@ -57,7 +62,10 @@ module.exports = {
 
         const data = await usersServices.login(postData)
         if (data.success) {
-            ctx.session.logged = true // 登录成功写入 session
+            // 登录成功写入 session
+            ctx.session.logged = true
+            ctx.session.id = data.id
+            delete data.id
         }
         ctx.body = data
     },

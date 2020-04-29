@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 import Header from '~/components/Header'
 
 export default {
@@ -20,13 +22,32 @@ export default {
     },
 
     // 异步获取数据
-    async asyncData({ $api }) {
-        // await $api.register()
+    asyncData({ res }) {
+        return {
+            pageData: res.pageData || {}
+        }
+    },
+
+    computed: {
+        ...mapGetters({
+            userInfo: 'getUserInfo'
+        })
     },
 
     mounted() {
-        console.log(process)
-        this.$api.login()
+        console.log(this.pageData)
+        const { userInfo } = this.pageData || {}
+        if (userInfo) {
+            this.A_setUserInfo(userInfo)
+        }
+        // this.$api.login({
+        //     account: 'lcl',
+        //     password: '123456'
+        // })
+    },
+
+    methods: {
+        ...mapActions(['A_setUserInfo'])
     }
 }
 </script>
