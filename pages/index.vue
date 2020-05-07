@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 import Header from '~/components/Header'
 
@@ -34,19 +34,18 @@ export default {
         })
     },
 
-    mounted() {
-        const { userInfo } = this.pageData || {}
-        if (userInfo) {
-            this.A_setUserInfo(userInfo)
+    created() {
+        // 在服务端注入用户信息
+        if (process.server) {
+            const { userInfo } = this.pageData || {}
+            userInfo && this.setUserInfo(userInfo)
         }
-        // this.$api.login({
-        //     account: 'lcl',
-        //     password: '123456'
-        // })
     },
 
+    mounted() {},
+
     methods: {
-        ...mapActions(['A_setUserInfo'])
+        ...mapMutations(['setUserInfo'])
     }
 }
 </script>

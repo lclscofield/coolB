@@ -1,3 +1,4 @@
+import Message from 'ant-design-vue/lib/message' // 全局提示
 import http from '../api'
 
 export default function(ctx, inject) {
@@ -31,10 +32,18 @@ export default function(ctx, inject) {
          * You can also judge the status by HTTP Status Code
          */
         response => {
-            const res = response.data
-            console.log(111, res)
-            if (res.success && process.browser) {
-                return res
+            if (process.browser) {
+                const { config } = response
+                const res = response.data
+
+                if (res.success) {
+                    return res.data || true
+                }
+
+                // 根据 config 中的 isMe 来判断是否进行全局错误提示
+                if (!config.isMe) {
+                    Message.error(res.errMsg || '网络错误')
+                }
             }
             // redirect('/404')
             // return Promise.reject(new Error(res.errMsg || 'Error'))
@@ -48,6 +57,7 @@ export default function(ctx, inject) {
 
     // 错误处理
     axios.onError(error => {
+        console.log(error, error.response)
         const code = parseInt(error.response && error.response.status)
         if (code === 400) {
             redirect('/404')

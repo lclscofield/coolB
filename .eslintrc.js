@@ -21,6 +21,7 @@ module.exports = {
         indent: ['error', 4],
         'vue/html-indent': ['error', 4],
         'no-console': 'off',
-        'vue/attribute-hyphenation': ['error', 'never']
+        'vue/attribute-hyphenation': ['error', 'never'],
+        'prettier/prettier': ['error', { printWidth: 120 }]
     }
 }

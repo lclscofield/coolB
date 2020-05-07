@@ -8,24 +8,16 @@
                 <nuxt-link class="header-nav-item" to="/">首页</nuxt-link>
             </div>
             <div v-if="!userInfo" class="header-user">
-                <span class="header-user-item" @click="showLoginModal(0)">
-                    登录
-                </span>
+                <span class="header-user-item" @click="showLoginModal(0)">登录</span>
                 <a-divider type="vertical" />
-                <span class="header-user-item" @click="showLoginModal(1)">
-                    注册
-                </span>
+                <span class="header-user-item" @click="showLoginModal(1)">注册</span>
             </div>
             <div v-else class="header-user flex">
                 <span class="username">{{ userInfo.username }}</span>
                 <img class="avatar" :src="userInfo.imgUrl" />
             </div>
         </div>
-        <Login
-            :modalType="modalType"
-            :showModal="showModal"
-            @hideModal="showModal = false"
-        ></Login>
+        <Login :modalType="modalType" :showModal="showModal" @hideModal="showModal = false"></Login>
     </header>
 </template>
 

@@ -15,7 +15,12 @@ export const mutations = {
 }
 
 export const actions = {
-    A_setUserInfo({ commit }, params) {
-        commit('setUserInfo', params)
+    async A_setUserInfo({ commit }, loginData) {
+        const { account, password } = loginData
+        const res = await this.$api.fetch_login({
+            account,
+            password
+        })
+        res && commit('setUserInfo', res)
     }
 }

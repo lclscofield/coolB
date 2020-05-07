@@ -35,7 +35,12 @@ module.exports = {
         'ant-design-vue/lib/button/style',
         'ant-design-vue/lib/back-top/style',
         'ant-design-vue/lib/divider/style',
-        'ant-design-vue/lib/modal/style'
+        'ant-design-vue/lib/modal/style',
+        'ant-design-vue/lib/form-model/style',
+        'ant-design-vue/lib/icon/style',
+        'ant-design-vue/lib/input/style',
+        'ant-design-vue/lib/avatar/style',
+        'ant-design-vue/lib/message/style'
     ],
     /*
      ** Plugins to load before mounting the App 插件在进入页面前加载

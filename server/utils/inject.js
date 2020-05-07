@@ -11,7 +11,10 @@ module.exports = async ctx => {
         // 登录态时注入用户数据
         if (ctx.session.logged) {
             const doc = await userModel.getUserInfo(ctx.session.id)
-            pageData.userInfo = doc
+            doc &&
+                (pageData.userInfo = {
+                    ...doc.toJSON()
+                })
         }
 
         ctx.res.pageData = pageData

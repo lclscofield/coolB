@@ -48,8 +48,8 @@ module.exports = {
 
         if (await validateError(ctx, schemaRegister, postData)) return
 
-        const data = await usersServices.create(postData)
-        ctx.body = data
+        const res = await usersServices.create(postData)
+        ctx.body = res
     },
 
     /**
@@ -60,14 +60,13 @@ module.exports = {
 
         if (await validateError(ctx, schemaLogin, postData)) return
 
-        const data = await usersServices.login(postData)
-        if (data.success) {
+        const res = await usersServices.login(postData)
+        if (res.success && res.data) {
             // 登录成功写入 session
             ctx.session.logged = true
-            ctx.session.id = data.id
-            delete data.id
+            ctx.session.id = res.data.id
         }
-        ctx.body = data
+        ctx.body = res
     },
 
     /**
@@ -78,7 +77,7 @@ module.exports = {
 
         if (await validateError(ctx, schemaSendEmail, postData)) return
 
-        const data = await usersServices.sendEmailCode(postData.email)
-        ctx.body = data
+        const res = await usersServices.sendEmailCode(postData.email)
+        ctx.body = res
     }
 }

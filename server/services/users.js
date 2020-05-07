@@ -63,9 +63,10 @@ module.exports = {
             // 密码用盐值加密对比
             const hashPassword = createHash(password + ':' + doc.salt)
             if (hashPassword === doc.password) {
+                const { id, username, email, imgUrl } = doc
                 return {
                     success: true,
-                    id: doc.id
+                    data: { id, username, email, imgUrl }
                 }
             }
         }
@@ -90,8 +91,10 @@ module.exports = {
             })
             return {
                 success: true,
-                messageId: res.messageId,
-                email
+                data: {
+                    messageId: res.messageId,
+                    email
+                }
             }
         } else {
             return {
