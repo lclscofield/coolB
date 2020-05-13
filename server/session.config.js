@@ -1,6 +1,6 @@
 module.exports = {
     key: 'sessionId', // (string) cookie key
-    maxAge: 86400000, // (boolean) 默认一天过期
+    maxAge: 864000000, // (boolean) 默认十天过期
     autoCommit: true, // (boolean) 自动提交头部
     overwrite: true, // (boolean) 能否被覆盖
     httpOnly: true, // (boolean) 是否打上 httpOnly

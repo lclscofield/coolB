@@ -56,6 +56,17 @@ module.exports = {
     },
 
     /**
+     * 根据邮箱查找用户
+     * @param {string} email
+     */
+    async findUserForEmail(email) {
+        const doc = await UserModel.findOne({
+            email
+        })
+        return doc
+    },
+
+    /**
      * 登录，验证账号和密码
      * @param {string} account
      */

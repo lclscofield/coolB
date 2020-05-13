@@ -11,42 +11,49 @@ module.exports = {
      * @param {object} userInfo
      */
     async create(userInfo) {
-        const { username, password, emailMessageId, code } = userInfo
+        const { username, password, emailMessageId, email, code } = userInfo
 
         // 验证邮箱验证码
         const emailCode = emailCodes.get(emailMessageId)
-        if (!emailCode || emailCode.code !== code) {
+        if (!emailCode || emailCode.code !== code || emailCode.email !== email) {
             return {
                 success: false,
                 errMsg: '验证码错误'
             }
         }
 
-        const doc = await userModel.findUserForUsername(username)
-        if (!doc) {
-            // 给新用户生成哈希头像
-            const imgUrl = creatHashAvatar(username)
-            userInfo.imgUrl = imgUrl
-
-            // 生成盐
-            const salt = createSalt()
-            userInfo.salt = salt
-
-            // 密码用盐值加密
-            userInfo.password = createHash(password + ':' + salt)
-
-            // 存库
-            delete userInfo.emailMessageId
-            delete userInfo.code
-            await userModel.create(userInfo)
-            return {
-                success: true
-            }
-        } else {
+        const uDoc = await userModel.findUserForUsername(username)
+        if (uDoc) {
             return {
                 success: false,
                 errMsg: '用户名重复'
             }
+        }
+        const eDoc = await userModel.findUserForEmail(email)
+        if (eDoc) {
+            return {
+                success: false,
+                errMsg: '邮箱已使用'
+            }
+        }
+
+        // 给新用户生成哈希头像
+        const imgUrl = creatHashAvatar(username)
+        userInfo.imgUrl = imgUrl
+
+        // 生成盐
+        const salt = createSalt()
+        userInfo.salt = salt
+
+        // 密码用盐值加密
+        userInfo.password = createHash(password + ':' + salt)
+
+        // 存库
+        delete userInfo.emailMessageId
+        delete userInfo.code
+        await userModel.create(userInfo)
+        return {
+            success: true
         }
     },
 
@@ -85,15 +92,11 @@ module.exports = {
 
         if (res && res.messageId) {
             // 暂时存储邮件激活码
-            emailCodes.set(res.messageId, {
-                ...res,
-                limitTime: Date.now() + 90000 // 过期时间 90s
-            })
+            emailCodes.set(res.messageId, res)
             return {
                 success: true,
                 data: {
-                    messageId: res.messageId,
-                    email
+                    messageId: res.messageId
                 }
             }
         } else {

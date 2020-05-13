@@ -32,12 +32,13 @@ module.exports = {
             to: toEmail, // 收件人
             subject: '邮箱验证码', // 主题
             // 发送text或者html格式
-            text: `邮箱验证码: ${code}` // plain text body
+            text: `${appName}邮箱验证码: ${code}，两分钟后过期，请尽快使用。` // plain text body
             // html: '<b>Hello world?</b>' // html body
         })
         if (res && res.messageId) {
             return {
                 messageId: res.messageId,
+                email: toEmail,
                 code
             }
         }

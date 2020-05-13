@@ -17,7 +17,7 @@
                 <img class="avatar" :src="userInfo.imgUrl" />
             </div>
         </div>
-        <Login :modalType="modalType" :showModal="showModal" @hideModal="showModal = false"></Login>
+        <Login v-if="showModal" :modalType="modalType" :showModal="showModal" @hideModal="showModal = false"></Login>
     </header>
 </template>
 

@@ -4,7 +4,7 @@ const emailCodes = {
         this.map.set(key, val)
         setTimeout(() => {
             this.map.delete(key)
-        }, 90000) // 90s 后过期自动清除
+        }, 120000) // 120s 后过期自动清除
     },
     get(key) {
         return this.map.get(key)
