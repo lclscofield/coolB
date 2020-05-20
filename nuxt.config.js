@@ -1,6 +1,11 @@
 module.exports = {
     appName: 'CoolBa',
     mode: 'universal',
+    // 服务器
+    server: {
+        host: '127.0.0.1',
+        port: 3000
+    },
     /*
      ** Headers of the page
      */
@@ -73,6 +78,8 @@ module.exports = {
      */
     axios: {
         // baseURL: 'http://127.0.0.1:3000',
+        host: '127.0.0.1',
+        port: 3000,
         prefix: '/api'
     },
     /*
