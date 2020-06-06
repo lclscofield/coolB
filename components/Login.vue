@@ -22,7 +22,7 @@
                 <a-input
                     v-model="loginData.password"
                     type="password"
-                    :placeholder="loginPlaceholder.accountPlaceholder"
+                    :placeholder="loginPlaceholder.passwordPlaceholder"
                 >
                     <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
                 </a-input>
@@ -64,7 +64,7 @@
                 <a-input
                     v-model="registerData.password"
                     type="password"
-                    :placeholder="registerPlaceholder.accountPlaceholder"
+                    :placeholder="registerPlaceholder.passwordPlaceholder"
                 >
                     <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
                 </a-input>

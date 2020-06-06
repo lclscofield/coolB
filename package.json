@@ -1,7 +1,7 @@
 {
     "name": "coolba",
     "version": "1.0.0",
-    "description": "My sensational Nuxt.js project",
+    "description": "coolba",
     "author": "lclscofield",
     "private": true,
     "scripts": {
@@ -14,7 +14,6 @@
     "dependencies": {
         "@hapi/joi": "^17.1.1",
         "@nuxtjs/axios": "^5.3.6",
-        "@nuxtjs/dotenv": "^1.4.0",
         "ant-design-vue": "^1.1.10",
         "cross-env": "^5.2.0",
         "identicon.js": "^2.3.3",

@@ -1,10 +1,20 @@
 import Message from 'ant-design-vue/lib/message' // 全局提示
 import http from '../api'
+import nuxtConfig from '../nuxt.config.js'
 
 export default function(ctx, inject) {
     const { $axios, redirect } = ctx
     // 自定义封装 api
-    const axios = $axios.create()
+    const axios = $axios.create({
+        timeout: 5000
+    })
+
+    // 指定客户端 baseUrl 为当前 location
+    // if (process.browser) {
+    //     console.log(process, process.browser, process.client)
+    //     $axios.setBaseURL(location.host)
+    // }
+
     const api = http(axios)
     inject('api', api)
     ctx.$api = api
@@ -13,6 +23,9 @@ export default function(ctx, inject) {
     axios.interceptors.request.use(
         config => {
             // 发送请求之前对参数做些处理
+            if (process.browser) {
+                config.baseURL = location.origin + nuxtConfig.axios.prefix
+            }
             return config
         },
         error => {
@@ -21,7 +34,7 @@ export default function(ctx, inject) {
         }
     )
     axios.onRequest(config => {
-        console.log('访问接口:' + config.baseURL + '/' + config.url)
+        console.log('访问接口:' + config.url)
     })
 
     // response interceptor 响应拦截
@@ -57,7 +70,8 @@ export default function(ctx, inject) {
 
     // 错误处理
     axios.onError(error => {
-        console.log(error, error.response)
+        console.log(error)
+        Message.error('网络错误')
         const code = parseInt(error.response && error.response.status)
         if (code === 400) {
             redirect('/404')

@@ -4,8 +4,12 @@ module.exports = {
     // 服务器
     server: {
         host: '127.0.0.1',
-        port: 3000
+        port: 9999
     },
+    // 环境变量
+    // env: {
+    //     baseUrl: process.env.NODE_ENV === 'production' ? 'coolba.xyz' : '127.0.0.1:3000'
+    // },
     /*
      ** Headers of the page
      */
@@ -68,9 +72,7 @@ module.exports = {
      */
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
-        '@nuxtjs/axios',
-        // Doc: https://github.com/nuxt-community/dotenv-module
-        '@nuxtjs/dotenv'
+        '@nuxtjs/axios'
     ],
     /*
      ** Axios module configuration
@@ -78,9 +80,8 @@ module.exports = {
      */
     axios: {
         // baseURL: 'http://127.0.0.1:3000',
-        host: '127.0.0.1',
-        port: 3000,
         prefix: '/api'
+        // browserBaseURL: localtion
     },
     /*
      ** Build configuration
